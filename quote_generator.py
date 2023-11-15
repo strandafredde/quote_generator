@@ -1,15 +1,22 @@
-import requests
 from flask import Flask, render_template
-from pyofwar import pow
-img = requests.get("https://picsum.photos/800/600")
+import requests
+import os
 
 app = Flask(__name__)
-@app.route("/")
+
+# Set the template folder explicitly
+template_folder = os.path.dirname(os.path.abspath(__file__))
+app = Flask(__name__, template_folder=template_folder)
+
+@app.route('/')
 def index():
+    # Picsum Photos API URL
+    api_url = 'https://picsum.photos/800/600'
     
-    return "deez"
+    # Directly use the URL from the API
+    image_url = api_url
 
+    return render_template('index.html', image_url=image_url)
 
-app.run(debug=True)
-# print("Sun Tzu once said...")
-# print(pow.quote_random(1, False))
+if __name__ == '__main__':
+    app.run(debug=True)
